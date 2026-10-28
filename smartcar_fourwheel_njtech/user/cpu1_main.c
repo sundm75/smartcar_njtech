@@ -64,8 +64,9 @@ void core1_main(void)
     {
         // 此处编写需要循环执行的代码
 
-
-
+        mt9v03x_finish_flag = 0;
+        image_process();
+        led_toggle(LED_0);
 
         // 此处编写需要循环执行的代码
     }

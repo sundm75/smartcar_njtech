@@ -39,9 +39,8 @@ int core0_main(void)
 
         if(mt9v03x_finish_flag)
         {
-            ips200_displayimage03x((const uint8 *)mt9v03x_image, MT9V03X_W, MT9V03X_H);                       // 显示原始图像
-//            ips200_show_gray_image(0, 0, (const uint8 *)mt9v03x_image, MT9V03X_W, MT9V03X_H, 240, 180, 64);     // 显示二值化图像
-            mt9v03x_finish_flag = 0;
+            extern uint8 bin_buf[LM_IMAGE_H][LM_IMAGE_W];
+            ips200_show_gray_image(0, 120, (const uint8 *)gray_image, MT9V03X_W, MT9V03X_H, MT9V03X_W, MT9V03X_H, 0);
         }
 
 

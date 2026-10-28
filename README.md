@@ -55,6 +55,12 @@
 
 使用第一视角 视频 （https://www.bilibili.com/video/BV1vh4y157sB/?spm_id_from=333.337.search-card.all.click&vd_source=71db2148932a21bb8dece7cd24f9dd38） **自行裁剪图片**
 
+感谢华工开源的智能车仿真调试环境
+
+![img](README.assets/QQ_1793176145376.png)
+
+
+
 - ## 第三阶段 11.1-11.7
 
 **已经搭建的 + imu** 

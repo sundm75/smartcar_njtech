@@ -54,14 +54,6 @@ void core1_main(void)
     interrupt_global_enable(0);             // 打开全局中断
     // 此处编写用户代码 例如外设初始化代码等
 
-    while(1)
-    {
-        if(mt9v03x_init())
-            ips200_show_string(0, 80, "mt9v03x reinit.");
-        else
-            break;
-        system_delay_ms(500);                                                   // 短延时快速闪灯表示异常
-    }
     system_delay_ms(1000);
 
     // 此处编写用户代码 例如外设初始化代码等
@@ -77,7 +69,7 @@ void core1_main(void)
         {
 
             mt9v03x_finish_flag = 0;
-
+            image_process();
             led_toggle(LED_0);
         }
 

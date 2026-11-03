@@ -6,32 +6,7 @@
  */
 #include "ui.h"
 
-typedef struct  SmartCar_Param                                      //智能车调整参数
-{
-        float bend_steer_kp;
-        float bend_steer_kd;
-        float motor_kp;
-        float motor_ki;
-        float motor_kd;
-        float global_speed;
-        float circle_pid_ratio;
-        float circle_in_angle;
-        float circle_ready_in_dis;
-        float circle_in_dis;
-        float circle_len;
-        float circle_exit_dis;
-        float circle_exit_angle;
-        float cir_L_1;
-        float cir_L_2;
-        float cir_L_3;
-        float cir_dectect;
-        float cir_flg ;
-        float run_mode ;
-        float steer_middle_value;
-        uint16 flash_flag;
-} SMARTCAR_PARAM;
-SMARTCAR_PARAM smartcar_param ;
-
+SMARTCAR_PARAM smartcar_param;
 
 /* ----------------------------------------参数初始化---------------------------------------------- */
 /**
@@ -202,6 +177,13 @@ void display_Handle(void)
 
     key_process();
 
+    unsigned char str[32];
+    /*第一行 显示: 里程 左速度 右速度  */
+    sprintf(str,"%4dcm %3d %3d",(int)get_distance(), (int)get_left_speed()/10,(int)get_right_speed()/10);
+    ips200_show_string(0,0*16, str);
+    /*第二行 显示:中线 左duty 右duty yaw    */
+    sprintf(str,"L:%4dR:%4d %3.0f ",      get_left_duty(),get_right_duty(),yaw);
+    ips200_show_string(0,1*16, str);
 
 }
 

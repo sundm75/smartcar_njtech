@@ -40,14 +40,23 @@
 // 简单点说实际上进入中断后TC系列的硬件自动调用了 interrupt_global_disable(); 来拒绝响应任何的中断，因此需要我们自己手动调用 interrupt_global_enable(0); 来开启中断的响应。
 
 // **************************** PIT中断函数 ****************************
-//IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
-//{
-//    interrupt_global_enable(0);                     // 开启中断嵌套
-//    pit_clear_flag(CCU60_CH0);
-//
-//
-//
-//}
+IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
+{
+    interrupt_global_enable(0);                     // 开启中断嵌套
+    pit_clear_flag(CCU60_CH0);
+
+    static uint32 count = 0;
+
+       /*传感器获得车辆转速和距离信息 */
+       update_speed_and_distance();
+
+       if(count++ >= 200)
+       {
+           led_toggle(LED_1);
+           count = 0;
+       }
+
+}
 
 
 IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
@@ -55,7 +64,9 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     interrupt_global_enable(0);                     // 开启中断嵌套
     pit_clear_flag(CCU60_CH1);
 
-
+    /*基于纯四元数更新（仅陀螺仪数据）*/
+    update_quaternion();  // 1ms imu检测更新
+    get_euler_angles(&yaw);
 
 
 }
@@ -75,7 +86,7 @@ IFX_INTERRUPT(cc61_pit_ch1_isr, 0, CCU6_1_CH1_ISR_PRIORITY)
     interrupt_global_enable(0);                     // 开启中断嵌套
     pit_clear_flag(CCU61_CH1);
 
-
+    beep_handle();  //  1ms运行
 
 
 }

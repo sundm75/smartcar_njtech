@@ -6,32 +6,7 @@
  */
 #include "ui.h"
 
-typedef struct  SmartCar_Param										//智能车调整参数
-{
-    float bend_steer_kp;
-    float bend_steer_kd;
-    float motor_kp;
-    float motor_ki;
-    float motor_kd;
-    float global_speed;
-    float motor_kp2;
-    float motor_kgyro;
-    float circle_set_step; 
-    float fan_speed;
-	
-    float circle_len;
-    float circle_exit_dis;
-    float circle_exit_angle;
-    float cir_L_1;
-    float cir_L_2;
-    float cir_L_3;
-	  float laser_flag;
-    float circle_flag ;  
-    float run_mode;
-	  float steer_middle_value;
-} SMARTCAR_PARAM;
 SMARTCAR_PARAM smartcar_param ;
-
 /* ----------------------------------------参数初始化---------------------------------------------- */
 
 /**
@@ -69,7 +44,7 @@ void SMARTCAR_Init(void)
     smartcar_param.laser_flag    	=	1.0 ;   //laser_flag
     smartcar_param.circle_flag    = 1.0 ; //circle_flag
     smartcar_param.run_mode      = 1.0 ;
-	  smartcar_param.steer_middle_value = 1550.0 ;
+	  smartcar_param.steer_middle_value = 1505.0 ;
 		
 }
 
@@ -199,6 +174,13 @@ int get_param_index(void)
 /*  智能车显示*/
 void display_Handle(void)
 {
+	unsigned char txt[32];
 	key_process();
 	
+	    /*第一行 显示: 里程 左速度 右速度   */
+    sprintf((char*)txt,"%4dcm %3d %3d",(int)get_distance(), (int)get_left_speed(), (int)get_right_speed());
+    ips200_show_string(0, 120+0*16, txt);
+    /*第二行 显示: 中线 左duty 右duty yaw    */
+	sprintf((char*)txt,"m:%3d L:%3d R:%3d %3d ",   err_sum,  get_left_duty(), get_right_duty(),(int)imu_angle);
+    ips200_show_string(0,120+1*16, txt);
 }

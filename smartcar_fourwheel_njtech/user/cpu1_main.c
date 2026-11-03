@@ -54,8 +54,7 @@ void core1_main(void)
     interrupt_global_enable(0);             // 打开全局中断
     // 此处编写用户代码 例如外设初始化代码等
 
-
-
+    system_delay_ms(1000);
 
     // 此处编写用户代码 例如外设初始化代码等
 
@@ -64,9 +63,16 @@ void core1_main(void)
     {
         // 此处编写需要循环执行的代码
 
-        mt9v03x_finish_flag = 0;
-        image_process();
-        led_toggle(LED_0);
+
+
+        if(mt9v03x_finish_flag)
+        {
+
+            mt9v03x_finish_flag = 0;
+            image_process();
+            led_toggle(LED_0);
+        }
+
 
         // 此处编写需要循环执行的代码
     }
